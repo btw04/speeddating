@@ -1,5 +1,6 @@
 import Popup from '../components/Popup';
 import './globals.css'
+import { Providers } from './providers';
 
 export const metadata = {
   title: 'Lerngruppen Speeddating',
@@ -14,9 +15,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        {children}
-        <Popup /> 
-      </body>
+        <Providers>
+          {children}
+          <Popup /> 
+        </Providers>
+        </body>
     </html>
   );
 }

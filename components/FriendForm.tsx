@@ -34,7 +34,7 @@ const FriendForm: React.FC<FriendFormProps> = ({ id }) => {
     };
 
     return (
-        <div className="flex flex-col h-screen relative">
+        <div className="flex flex-col relative">
             <form onSubmit={handleSubmit} className="flex-grow space-y-4">
                 <input
                     type="text"
