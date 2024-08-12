@@ -14,7 +14,7 @@ const FriendForm: React.FC<FriendFormProps> = ({ id }) => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        const response = await fetch('/api/submit-friend', {
+        const response = await fetch('/api/submit/friend', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ id, friendId, msg: friendMsg }),

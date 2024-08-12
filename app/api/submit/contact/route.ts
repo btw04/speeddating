@@ -1,19 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import mongoose from 'mongoose';
 import { customAlphabet } from 'nanoid';
+import { userSchema } from '../../../../utils/MongoSchema';
 
 const MONGO_URI = process.env.MONGO_URI as string;
 const alphabet = '0123456789abcdefghijkmnopqrstuvwxyz';
 const nanoid = customAlphabet(alphabet, 5);
 
 mongoose.connect(MONGO_URI);
-
-const userSchema = new mongoose.Schema({
-  email: { type: String, required: true },
-  name: { type: String, required: false },
-  assignedNumber: { type: String, required: true },
-  references: { type: [[String]], default: [] },
-});
 
 const User = mongoose.models.User || mongoose.model('User', userSchema);
 

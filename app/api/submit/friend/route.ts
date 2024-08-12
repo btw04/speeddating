@@ -1,16 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import mongoose from 'mongoose';
+import { userSchema } from '../../../../utils/MongoSchema';
 
 const MONGO_URI = process.env.MONGO_URI as string;
 
 mongoose.connect(MONGO_URI);
 
-const userSchema = new mongoose.Schema({
-    email: { type: String, required: true },
-    name: { type: String, required: false },
-    assignedNumber: { type: String, required: true },
-    references: { type: [[String]], default: [] },
-  });
   
 const User = mongoose.models.User || mongoose.model('User', userSchema);
 
