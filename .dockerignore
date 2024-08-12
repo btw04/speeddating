@@ -1,0 +1,8 @@
+Dockerfile
+./.env.local
+.next
+!.next/static
+!.next/standalone
+.git
+node_modules
+npm-debug.log
