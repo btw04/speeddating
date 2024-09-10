@@ -12,7 +12,6 @@ mongoose.connect(MONGO_URI, {dbName: 'speeddating'});
 const User = mongoose.models.User || mongoose.model('User', userSchema);
 
 export async function POST(req: NextRequest) {
-  console.log(MONGO_URI);
   const { email, name } = await req.json();
   const assignedNumber = nanoid();
   const user = name === '' ? new User({ email, assignedNumber, references: [] }) : new User({ email, name, assignedNumber, references: [] });
