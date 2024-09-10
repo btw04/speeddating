@@ -8,10 +8,16 @@ import { Accordion, AccordionItem } from "@nextui-org/accordion";
 import getQuestions from '@/utils/IceBreaker';
 import FriendForm from '../../components/FriendForm';
 
+const NUMBER_OF_QUESTIONS = 4;
+const INITIAL_TIME = 5; // in minutes
+const MINIMUM_FIRST_TIME = 3; // in minutes
+const TIME_TO_SWITCH = 5; // in minutes
+
 export default function ContactPage() {
   const [assignedNumber, setAssignedNumber] = useState<string | null>(null);
   const [questions, setQuestions] = useState<string[]>([]);
 
+  // check if user has assigned number, if not redirect to home
   useEffect(() => {
     const cookie = Cookies.get('assignedNumber');
     if (!cookie) {
@@ -21,11 +27,33 @@ export default function ContactPage() {
     }
   }, []);
 
+  // load random questions 
   useEffect(() => {
-    setQuestions(getQuestions(5));
+    setQuestions(getQuestions(NUMBER_OF_QUESTIONS));
   }, []);
 
-  const handleReturnToData = async () => {
+  // synchronize time on first load to next occurence of INITIAL_TIME
+  useEffect(() => {
+    const now = new Date();
+    let timeUntilNextPopup = ((INITIAL_TIME - (now.getMinutes() % INITIAL_TIME)) * 60 * 1000) - (now.getSeconds() * 1000);
+    if(timeUntilNextPopup < MINIMUM_FIRST_TIME * 60 * 1000) {
+      timeUntilNextPopup += TIME_TO_SWITCH * 60 * 1000;
+    }
+
+    const timeoutId = setTimeout(() => {
+      triggerPopup();
+      const intervalId = setInterval(triggerPopup, TIME_TO_SWITCH * 60 * 1000);
+      return () => clearInterval(intervalId);
+    }, timeUntilNextPopup);
+
+    return () => clearTimeout(timeoutId);
+  }, []);
+
+  const triggerPopup = () => {
+    alert('Zeit den Gesprächspartner zu wechseln!');
+  }
+
+  const handleDeleteData = async () => {
     const confirm = window.confirm('Bist du sicher, dass du deine Daten löschen möchtest?');
     if (confirm) {
       const response = await fetch('/api/delete', {
@@ -64,7 +92,7 @@ export default function ContactPage() {
         </Accordion>
       </div>
       <button
-        onClick={handleReturnToData}
+        onClick={handleDeleteData}
         className="fixed bottom-4 left-4 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 focus:outline-none"
       >
         Daten löschen
