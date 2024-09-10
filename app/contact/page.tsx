@@ -46,7 +46,7 @@ export default function ContactPage() {
           Deine ID: 
           <span className="text-blue-600 font-bold ml-2">{assignedNumber}</span>
         </h1>
-        <FriendForm id={assignedNumber} />
+        {assignedNumber && <FriendForm id={assignedNumber} />}
         <Accordion isCompact>
           <AccordionItem key="1" aria-label="Accordion 1" title={
             <div className="text-lg font-bold py-5 text-left">
