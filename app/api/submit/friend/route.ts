@@ -6,7 +6,6 @@ const MONGO_URI = process.env.MONGO_URI as string;
 
 mongoose.connect(MONGO_URI, {dbName: 'speeddating'});
 
-  
 const User = mongoose.models.User || mongoose.model('User', userSchema);
 
 export async function POST(req: NextRequest) {

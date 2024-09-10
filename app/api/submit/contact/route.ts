@@ -3,15 +3,16 @@ import mongoose from 'mongoose';
 import { customAlphabet } from 'nanoid';
 import { userSchema } from '../../../../utils/MongoSchema';
 
-const MONGO_URI = process.env.MONGO_URI as string;
+
 const alphabet = '0123456789abcdefghijkmnopqrstuvwxyz';
 const nanoid = customAlphabet(alphabet, 5);
-
+const MONGO_URI = process.env.MONGO_URI as string;
 mongoose.connect(MONGO_URI, {dbName: 'speeddating'});
 
 const User = mongoose.models.User || mongoose.model('User', userSchema);
 
 export async function POST(req: NextRequest) {
+  console.log(MONGO_URI);
   const { email, name } = await req.json();
   const assignedNumber = nanoid();
   const user = name === '' ? new User({ email, assignedNumber, references: [] }) : new User({ email, name, assignedNumber, references: [] });
