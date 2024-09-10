@@ -7,7 +7,7 @@ const MONGO_URI = process.env.MONGO_URI as string;
 const alphabet = '0123456789abcdefghijkmnopqrstuvwxyz';
 const nanoid = customAlphabet(alphabet, 5);
 
-mongoose.connect(MONGO_URI);
+mongoose.connect(MONGO_URI, {dbName: 'speeddating'});
 
 const User = mongoose.models.User || mongoose.model('User', userSchema);
 

@@ -4,7 +4,8 @@ import { userSchema } from '../../../utils/MongoSchema';
 
 const MONGO_URI = process.env.MONGO_URI as string;
 
-mongoose.connect(MONGO_URI);
+mongoose.connect(MONGO_URI, {dbName: 'speeddating'});
+
 
 const User = mongoose.models.User || mongoose.model('User', userSchema);
 
