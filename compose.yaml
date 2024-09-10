@@ -30,5 +30,5 @@ volumes:
     driver: local
 
 networks:
-  speeddating-network:
+  network:
     driver: bridge
