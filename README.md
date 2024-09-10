@@ -1,6 +1,6 @@
 ## Overview
 
-This website is intended to help students connect and share their information with each other. It was developed for the workshop "Lerngruppen Speeddating" (OPhase Informatik TU Darmstadt).
+This website is intended to help students connect and share their contact information. It was developed for the workshop "Lerngruppen Speeddating" (OPhase Informatik TU Darmstadt).
 
 ## Deployment
 
@@ -20,6 +20,13 @@ MONGO_PASS=abc123
 
 Clone this repository and run `docker compose up` in the directory, optionally detached as `docker compose up -d`
 
+## ToDo
+- [ ] Stronger wording for data deletion
+- [ ] Option to delete specific added tags ("friends")
+- [ ] Check for tag-conflict on creation
+- [ ] Prevent users from changing ID (separate session token)
+- [ ] Fix time-notice (server-side timestamp? delete feature?)
+- [ ] Script for distributing added friends
 
 ## License
 
