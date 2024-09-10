@@ -5,17 +5,21 @@ This website is intended to help students connect and share their information wi
 ## Deployment
 
 ### Prerequisites
-
 - [Docker](https://www.docker.com/get-started)
-- An environment variable containing the *Docker Connection URI* as `MONGO_URI`. The easiest way to set this up locally is to create a `.env` file in the same directory with the line `MONGO_URI=<MONGO_URI>`.
+- Environment variables containing the *Docker Connection URI* as `MONGO_URI`, the *exposed website port* as `EXTERNAL_PORT`, the *exposed MongoDB port* as `MONGO_PORT` and `MONGO_USER` + `MONGO_PASS` for the MongoDB user and password. Note that these must match the used credentials in the `MONGO_URI`. The easiest way to set this up locally is to create a `.env` file in the same directory that includes (with a more secure password!)
+```
+EXTERNAL_PORT=8081
+MONGO_URI = mongodb://abc:abc123@mongodb:27017/
+MONGO_PORT=27017
+MONGO_USER=abc
+MONGO_PASS=abc123
+```
 
-### Build Image
 
-Clone this repository and run `docker build ./ -t "speeddating"` in the same directory. Note that the `docker build` command might require different path arguments (pointing to the Dockerfile) on some machines, and you may not need `./` as an argument.
+### Run containers
 
-### Running the Image
+Clone this repository and run `docker compose up` in the directory, optionally detached as `docker compose up -d`
 
-After successfully building the image, run `docker run -p 3000:3000 speeddating`. This will map the internal container port 3000 to port 3000 on your machine. Change the external (machine) port if necessary.
 
 ## License
 
