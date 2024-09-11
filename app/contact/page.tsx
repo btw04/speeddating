@@ -6,7 +6,7 @@ import React from "react";
 import { Accordion, AccordionItem } from "@nextui-org/accordion";
 
 import getQuestions from '@/utils/IceBreaker';
-import FriendForm from '../../components/FriendForm';
+import FriendForm from '@/components/FriendForm';
 
 const NUMBER_OF_QUESTIONS = 4;
 const INITIAL_TIME = 5; // in minutes
@@ -14,18 +14,20 @@ const MINIMUM_FIRST_TIME = 3; // in minutes
 const TIME_TO_SWITCH = 5; // in minutes
 
 export default function ContactPage() {
-  const [assignedNumber, setAssignedNumber] = useState<string | null>(null);
+  const [ID, setID] = useState<string | null>(null);
+  const [session, setSession] = useState<string | null>(null);
   const [questions, setQuestions] = useState<string[]>([]);
 
   // check if user has assigned number, if not redirect to home
   useEffect(() => {
-    const cookie = Cookies.get('assignedNumber');
+    const cookie = Cookies.get('session');
     if (!cookie) {
       window.location.href = '/'; 
-    } else {
-      setAssignedNumber(cookie);
+    } else if (!ID) {
+      setSession(cookie);
+      getID(cookie);
     }
-  }, []);
+  }, [ID]);
 
   // load random questions 
   useEffect(() => {
@@ -49,6 +51,17 @@ export default function ContactPage() {
     return () => clearTimeout(timeoutId);
   }, []);
 
+  async function getID(session: string) {
+    const response = await fetch("/api/id", {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json'},
+      body: JSON.stringify({session: session})
+    });
+    const data = await response.json();
+    setID(data.ID);
+  }
+
+
   const triggerPopup = () => {
     alert('Zeit den Gesprächspartner zu wechseln!');
   }
@@ -59,9 +72,9 @@ export default function ContactPage() {
       const response = await fetch('/api/delete', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: assignedNumber })
+        body: JSON.stringify({ id: session })
       });
-      Cookies.remove('assignedNumber');
+      Cookies.remove('session');
       window.location.href = '/'; 
     }
   };
@@ -72,9 +85,9 @@ export default function ContactPage() {
       <div className="flex-grow">
         <h1 className="text-2xl font-bold mb-4">
           Deine ID: 
-          <span className="text-blue-600 font-bold ml-2">{assignedNumber}</span>
+          <span className="text-blue-600 font-bold ml-2">{ID}</span>
         </h1>
-        {assignedNumber && <FriendForm id={assignedNumber} />}
+        {session && <FriendForm session={session} />}
         <Accordion isCompact>
           <AccordionItem key="1" aria-label="Accordion 1" title={
             <div className="text-lg font-bold py-5 text-left">

@@ -25,8 +25,8 @@ The MongoDB Container caches the database user in its Docker volume and changing
 ## ToDo
 - [ ] Stronger wording for data deletion
 - [ ] Option to delete specific added tags ("friends")
-- [ ] Check for tag-conflict on creation
-- [ ] Prevent users from changing ID (separate session token)
+- [X] Check for id-conflict on creation
+- [X] Prevent users from changing ID (separate session token)
 - [ ] Fix time-notice (server-side timestamp? delete feature?)
 - [ ] Script for distributing added friends
 

@@ -9,7 +9,7 @@ const ContactForm = () => {
   const [verifyEmail, setVerifyEmail] = useState('');
   const [name, setName] = useState('');
   const [isEmailValid, setIsEmailValid] = useState(false);
-  const [assignedNumber, setAssignedNumber] = useState<string | null>(null);
+  const [session, setSession] = useState<string | null>(null);
 
   const emailInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
@@ -22,9 +22,8 @@ const ContactForm = () => {
       body: JSON.stringify({ email, name }),
     });
     const data = await response.json();
-    setAssignedNumber(data.number);
-    console.log("Contact: " + data.number);
-    setCookie('assignedNumber', data.number, { path: '/', maxAge: 60 * 60 * 24 });
+    setSession(data.session);
+    setCookie('session', data.session, { path: '/', maxAge: 60 * 60 * 24 });
     router.push('/contact');
   };
 

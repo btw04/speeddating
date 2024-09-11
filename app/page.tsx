@@ -1,10 +1,10 @@
-import ContactForm from '../components/ContactForm';
+import ContactForm from '@/components/ContactForm';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 export default function Home() {
   const cookieStore = cookies();
-  if (cookieStore.has('assignedNumber')) {
+  if (cookieStore.has('session')) {
     redirect('/contact');
   }
   return (

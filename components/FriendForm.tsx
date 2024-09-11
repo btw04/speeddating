@@ -4,10 +4,10 @@ import { useState } from 'react';
 import React from 'react';
 
 interface FriendFormProps {
-    id: string;
+    session: string;
 }
 
-const FriendForm: React.FC<FriendFormProps> = ({ id }) => {
+const FriendForm: React.FC<FriendFormProps> = ({ session }) => {
     const [friendId, setFriendId] = useState('');
     const [friendMsg, setFriendMsg] = useState('');
     const [notice, setNotice] = useState<{ message: string, type: 'success' | 'error' } | null>(null);
@@ -17,7 +17,7 @@ const FriendForm: React.FC<FriendFormProps> = ({ id }) => {
         const response = await fetch('/api/submit/friend', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ id, friendId, msg: friendMsg }),
+            body: JSON.stringify({ session, friendId, msg: friendMsg }),
         });
 
         if (response.ok) {
