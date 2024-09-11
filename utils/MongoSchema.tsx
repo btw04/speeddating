@@ -5,4 +5,5 @@ export const userSchema = new mongoose.Schema({
     name: { type: String, required: false },
     assignedNumber: { type: String, required: true },
     references: { type: [[String]], default: [] },
+    session: {type: String, required: true}
 });
