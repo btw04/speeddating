@@ -1,6 +1,6 @@
 ## Overview
 
-This website is intended to help students connect and share their information with each other. It was developed for the workshop "Lerngruppen Speeddating" (OPhase Informatik TU Darmstadt).
+This website is intended to help students connect and share their contact information. It was developed for the workshop "Lerngruppen Speeddating" (OPhase Informatik TU Darmstadt).
 
 ## Deployment
 
@@ -22,6 +22,13 @@ Clone this repository and run `docker compose up` in the directory, optionally d
 
 ## Known Limitations
 The MongoDB Container caches the database user in its Docker volume and changing the USER/PASSWORD after initializing it will not be applied on restart. Instead, only deleting the MongoDB volume and reinitializing it will set the new User. *Note that this will also delete all data stored in the database!* One way to achieve this is by running `docker compose down -v` while the containers are running
+## ToDo
+- [ ] Stronger wording for data deletion
+- [ ] Option to delete specific added tags ("friends")
+- [ ] Check for tag-conflict on creation
+- [ ] Prevent users from changing ID (separate session token)
+- [ ] Fix time-notice (server-side timestamp? delete feature?)
+- [ ] Script for distributing added friends
 
 ## License
 
