@@ -20,6 +20,8 @@ MONGO_PASS=abc123
 
 Clone this repository and run `docker compose up` in the directory, optionally detached as `docker compose up -d`
 
+## Known Limitations
+The MongoDB Container caches the database user in its Docker volume and changing the USER/PASSWORD after initializing it will not be applied on restart. Instead, only deleting the MongoDB volume and reinitializing it will set the new User. *Note that this will also delete all data stored in the database!* One way to achieve this is by running `docker compose down -v` while the containers are running
 
 ## License
 
