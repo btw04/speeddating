@@ -20,11 +20,19 @@ const FriendForm: React.FC<FriendFormProps> = ({ onSubmission }) => {
             body: JSON.stringify({ friendId, msg: friendMsg }),
         });
 
-        if (response.ok) {
+        if (response.status === 200) {
             setNotice({ message: 'ID erfolgreich hinzugefügt', type: 'success' });
             setFriendId('');
             setFriendMsg('');
             onSubmission();
+        } else if (response.status === 208) {
+            setNotice({ message: 'ID bereits hinzugefügt', type: 'error' });
+            setFriendId('');
+            setFriendMsg('');
+        } else if (response.status === 400) {
+            setNotice({ message: 'Fehler: Du kennst dich schon!', type: 'error' });
+            setFriendId('');
+            setFriendMsg('');
         } else {
             setNotice({ message: 'Fehler: ID nicht gefunden!', type: 'error' });
         }

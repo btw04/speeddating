@@ -94,9 +94,9 @@ export default function ContactPage() {
     });
 
     if (response.ok) {
-      alert('Freund erfolgreich gelöscht');
+      alert('ID erfolgreich gelöscht');
     } else {
-      alert('Fehler beim Löschen des Freundes');
+      alert('Fehler beim Löschen der ID');
     }
 
     fetchFriends();

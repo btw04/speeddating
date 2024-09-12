@@ -19,6 +19,12 @@ export async function POST(req: NextRequest) {
     if (!user || !friend) {
         return NextResponse.json({ error: 'User/Friend not found' }, { status: 404 });
     }
+    if (user.assignedNumber === friendId) {
+        return NextResponse.json({ error: 'Cannot add yourself' }, { status: 400 });
+    }
+    if (user.references.some((reference: [[String]]) => reference[0] === friendId)) {
+        return NextResponse.json({ }, { status: 208 });
+    }
     user.references.push([friendId, msg]);
     await user.save();
     return NextResponse.json({}, { status: 200 });
