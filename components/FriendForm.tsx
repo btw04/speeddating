@@ -17,7 +17,7 @@ const FriendForm: React.FC<FriendFormProps> = ({ session }) => {
         const response = await fetch('/api/submit/friend', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ session, friendId, msg: friendMsg }),
+            body: JSON.stringify({ friendId, msg: friendMsg }),
         });
 
         if (response.ok) {

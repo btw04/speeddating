@@ -9,7 +9,6 @@ const ContactForm = () => {
   const [verifyEmail, setVerifyEmail] = useState('');
   const [name, setName] = useState('');
   const [isEmailValid, setIsEmailValid] = useState(false);
-  const [session, setSession] = useState<string | null>(null);
 
   const emailInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
@@ -21,10 +20,9 @@ const ContactForm = () => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, name }),
     });
-    const data = await response.json();
-    setSession(data.session);
-    setCookie('session', data.session, { path: '/', maxAge: 60 * 60 * 24 });
-    router.push('/contact');
+    response.ok ? router.push('/contact') : alert('Fehler beim Einreichen');
+    //setSession(data.session);
+    //setCookie('session', data.session, { path: '/', maxAge: 60 * 60 * 24 });
   };
 
   useEffect(() => {

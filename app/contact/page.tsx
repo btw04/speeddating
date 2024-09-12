@@ -55,7 +55,6 @@ export default function ContactPage() {
     const response = await fetch("/api/id", {
       method: 'POST',
       headers: { 'Content-Type': 'application/json'},
-      body: JSON.stringify({session: session})
     });
     const data = await response.json();
     setID(data.ID);
@@ -71,8 +70,7 @@ export default function ContactPage() {
     if (confirm) {
       const response = await fetch('/api/delete', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: session })
+        headers: { 'Content-Type': 'application/json' }
       });
       Cookies.remove('session');
       window.location.href = '/'; 

@@ -9,7 +9,11 @@ mongoose.connect(MONGO_URI, {dbName: 'speeddating'});
 const User = mongoose.models.User || mongoose.model('User', userSchema);
 
 export async function POST(req: NextRequest) {
-    const { session, friendId, msg } = await req.json();
+    const { friendId, msg } = await req.json();
+    const session = req.cookies.get('session')?.value;
+    if (!session) {
+        return NextResponse.json({error: 'Unknown session'}, {status: 401});
+    }
     const user = await User.findOne({ session });
     const friend = await User.findOne({ assignedNumber: friendId });
     if (!user || !friend) {

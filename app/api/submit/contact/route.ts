@@ -27,5 +27,10 @@ export async function POST(req: NextRequest) {
   const user = name === '' ? new User({ email, assignedNumber, references: [], session: randSession }) : new User({ email, name, assignedNumber, references: [], session: randSession });
   await user.save();
 
-  return NextResponse.json({ session: randSession });
+  const response = NextResponse.json({ status: 200 });
+  response.cookies.set('session', randSession, { 
+    maxAge: 60 * 60 * 24,
+    path: '/' 
+  });
+  return response;
 }
