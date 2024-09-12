@@ -10,9 +10,8 @@ import FriendForm from '@/components/FriendForm';
 
 
 const NUMBER_OF_QUESTIONS = 4;
-const INITIAL_TIME = 5; // in minutes
-const MINIMUM_FIRST_TIME = 3; // in minutes
-const TIME_TO_SWITCH = 5; // in minutes
+const MINIMUM_FIRST_TIME = 1; // in minutes
+const TIME_TO_SWITCH = 3; // in minutes
 
 interface Friend {
   id: string;
@@ -44,15 +43,17 @@ export default function ContactPage() {
   // synchronize time on first load to next occurence of INITIAL_TIME
   useEffect(() => {
     const now = new Date();
-    let timeUntilNextPopup = ((INITIAL_TIME - (now.getMinutes() % INITIAL_TIME)) * 60 * 1000) - (now.getSeconds() * 1000);
+    let timeUntilNextPopup = ((TIME_TO_SWITCH - (now.getMinutes() % TIME_TO_SWITCH)) * 60 * 1000) - (now.getSeconds() * 1000);
+    const then = new Date(now.getTime() + timeUntilNextPopup);
+    console.log('calculated time until next popup %d, which is date %s', timeUntilNextPopup, then.toISOString());
     if(timeUntilNextPopup < MINIMUM_FIRST_TIME * 60 * 1000) {
       timeUntilNextPopup += TIME_TO_SWITCH * 60 * 1000;
+      console.log('time until next popup is less than minimum, now pointing to', new Date(now.getTime() + timeUntilNextPopup).toISOString());
     }
 
     const timeoutId = setTimeout(() => {
       triggerPopup();
-      const intervalId = setInterval(triggerPopup, TIME_TO_SWITCH * 60 * 1000);
-      return () => clearInterval(intervalId);
+      setInterval(triggerPopup, TIME_TO_SWITCH * 60 * 1000);
     }, timeUntilNextPopup);
 
     return () => clearTimeout(timeoutId);

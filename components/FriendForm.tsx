@@ -30,7 +30,7 @@ const FriendForm: React.FC<FriendFormProps> = ({ onSubmission }) => {
             setFriendId('');
             setFriendMsg('');
         } else if (response.status === 400) {
-            setNotice({ message: 'Fehler: Du kennst dich schon!', type: 'error' });
+            setNotice({ message: 'Fehler', type: 'error' });
             setFriendId('');
             setFriendMsg('');
         } else {
