@@ -7,7 +7,7 @@ import { Accordion, AccordionItem } from "@nextui-org/accordion";
 
 import getQuestions from '@/utils/IceBreaker';
 import FriendForm from '@/components/FriendForm';
-import FriendsList from '@/components/FriendsList';
+
 
 const NUMBER_OF_QUESTIONS = 4;
 const INITIAL_TIME = 5; // in minutes
