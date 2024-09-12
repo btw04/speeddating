@@ -4,10 +4,10 @@ import { useState } from 'react';
 import React from 'react';
 
 interface FriendFormProps {
-    session: string;
+    onSubmission: () => void;
 }
 
-const FriendForm: React.FC<FriendFormProps> = ({ session }) => {
+const FriendForm: React.FC<FriendFormProps> = ({ onSubmission }) => {
     const [friendId, setFriendId] = useState('');
     const [friendMsg, setFriendMsg] = useState('');
     const [notice, setNotice] = useState<{ message: string, type: 'success' | 'error' } | null>(null);
@@ -24,6 +24,7 @@ const FriendForm: React.FC<FriendFormProps> = ({ session }) => {
             setNotice({ message: 'ID erfolgreich hinzugefügt', type: 'success' });
             setFriendId('');
             setFriendMsg('');
+            onSubmission();
         } else {
             setNotice({ message: 'Fehler: ID nicht gefunden!', type: 'error' });
         }

@@ -11,7 +11,7 @@ const requestLog: { [key: string]: number} = {};
 const RATE_LIMIT = 250;
 const RATE_LIMITING = false;
 
-export async function POST(req: NextRequest) {
+export async function GET(req: NextRequest) {
     let session = req.cookies.get('session')?.value;
     if(!session) {
         return NextResponse.json({ error: 'Unknown session' }, { status: 401 });
@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
     requestLog[clientIP] = currentTime;
 
     let foundUser = await User.findOne({ session });
-    const id = foundUser.assignedNumber;
+    const references = foundUser.references;
 
-    return NextResponse.json({ ID: id });
+    return NextResponse.json({ friends: references });
 }

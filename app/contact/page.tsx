@@ -7,16 +7,23 @@ import { Accordion, AccordionItem } from "@nextui-org/accordion";
 
 import getQuestions from '@/utils/IceBreaker';
 import FriendForm from '@/components/FriendForm';
+import FriendsList from '@/components/FriendsList';
 
 const NUMBER_OF_QUESTIONS = 4;
 const INITIAL_TIME = 5; // in minutes
 const MINIMUM_FIRST_TIME = 3; // in minutes
 const TIME_TO_SWITCH = 5; // in minutes
 
+interface Friend {
+  id: string;
+  message: string | null;
+}
+
 export default function ContactPage() {
   const [ID, setID] = useState<string | null>(null);
   const [session, setSession] = useState<string | null>(null);
   const [questions, setQuestions] = useState<string[]>([]);
+  const [friends, setFriends] = useState<Friend[]>([]);
 
   // check if user has assigned number, if not redirect to home
   useEffect(() => {
@@ -51,6 +58,10 @@ export default function ContactPage() {
     return () => clearTimeout(timeoutId);
   }, []);
 
+  useEffect(() => {
+    fetchFriends();
+  }, []);
+
   async function getID(session: string) {
     const response = await fetch("/api/id", {
       method: 'POST',
@@ -60,20 +71,50 @@ export default function ContactPage() {
     setID(data.ID);
   }
 
+  const fetchFriends = async () => {
+    const response = await fetch('/api/friends', {
+      method: 'GET'
+    });
+    if (response.ok) {
+      const data = await response.json();
+      setFriends(data.friends.map((friend: [string, string]) => ({ id: friend[0], message: friend[1] })));
+    }
+  };
+
 
   const triggerPopup = () => {
     alert('Zeit den Gesprächspartner zu wechseln!');
   }
 
-  const handleDeleteData = async () => {
-    const confirm = window.confirm('Bist du sicher, dass du deine Daten löschen möchtest?');
+  const handleDeleteFriend = async (friendId: string) => {
+    const response = await fetch('/api/delete/friend', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ friendId }),
+    });
+
+    if (response.ok) {
+      alert('Freund erfolgreich gelöscht');
+    } else {
+      alert('Fehler beim Löschen des Freundes');
+    }
+
+    fetchFriends();
+  };
+
+  const handleDeleteAllData = async () => {
+    const confirm = window.confirm('Achtung! Bist du sicher, dass du ALLE deine Daten löschen möchtest? Dies kann nicht rückgängig gemacht werden und du wirst nicht per E-Mail über Kontakte benachrichtigt.');
     if (confirm) {
       const response = await fetch('/api/delete', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' }
       });
-      Cookies.remove('session');
-      window.location.href = '/'; 
+      if (response.ok) {
+        Cookies.remove('session');
+        window.location.href = '/';
+      } else {
+        alert('Fehler beim Löschen der Daten');
+      }
     }
   };
   
@@ -82,10 +123,10 @@ export default function ContactPage() {
     <div className="relative flex flex-col min-h-screen container mx-auto p-4 pb-16">
       <div className="flex-grow">
         <h1 className="text-2xl font-bold mb-4">
-          Deine ID: 
+          Deine ID:
           <span className="text-blue-600 font-bold ml-2">{ID}</span>
         </h1>
-        {session && <FriendForm session={session} />}
+        <FriendForm onSubmission={fetchFriends} />
         <Accordion isCompact>
           <AccordionItem key="1" aria-label="Accordion 1" title={
             <div className="text-lg font-bold py-5 text-left">
@@ -101,12 +142,40 @@ export default function ContactPage() {
             </ul>
           </AccordionItem>
         </Accordion>
+        <div className="accordion-container">
+      <Accordion isCompact>
+        <AccordionItem
+          key="friend-list"
+          title={
+            <div className="text-lg font-bold py-5 text-left">
+              Hinzugefügte IDs
+            </div>
+          }
+          aria-label="Hinzugefügte IDs"
+        >
+          <ul className="flex flex-col gap-4 p-2">
+            {friends.map((friend, index) => (
+              <li key={index} className="border border-gray-300 rounded-lg p-4 bg-gray-100">
+                <p><strong>ID:</strong> {friend.id}</p>
+                <p><strong>Nachricht:</strong> {friend.message}</p>
+                <button
+                  className="bg-red-500 text-white px-2 py-1 rounded mt-2"
+                  onClick={() => handleDeleteFriend(friend.id)}
+                >
+                  Löschen
+                </button>
+              </li>
+            ))}
+          </ul>
+        </AccordionItem>
+      </Accordion>
+    </div>
       </div>
       <button
-        onClick={handleDeleteData}
+        onClick={handleDeleteAllData}
         className="fixed bottom-4 left-4 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 focus:outline-none"
       >
-        Daten löschen
+        Alle Daten löschen
       </button>
     </div>
   );
