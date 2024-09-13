@@ -11,7 +11,9 @@ const questions_ger: string[] = [
     "Denkst du in Bildern oder Worten?",
     "Wie viele Tabs sind in deinem Browser normalerweise offen?",
     "Welcher Videospiel-Charakter wärst du gerne?",
-    "Welche Musik hörst du beim Lernen?"
+    "Was ist etwas, das du gerne können würdest?",
+    "Was ist etwas, was du anders machst als andere?",
+    "Welche Musik (wenn überhaupt) hörst du beim Lernen?"
 ];
 
 
