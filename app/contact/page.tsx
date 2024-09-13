@@ -128,13 +128,13 @@ export default function ContactPage() {
           <span className="text-blue-600 font-bold ml-2">{ID}</span>
         </h1>
         <FriendForm onSubmission={fetchFriends} />
-        <Accordion isCompact>
+        <Accordion isCompact variant='shadow' className='mt-8 mb-4'>
           <AccordionItem key="1" aria-label="Accordion 1" title={
             <div className="text-lg font-bold py-5 text-left">
               Eisbrecher
             </div>
           }>
-            <ul className="flex flex-wrap gap-4">
+            <ul className="flex flex-wrap gap-4 mb-4">
               {questions.map((question, index) => (
                 <li key={index} className="inline-block border border-gray-300 rounded-lg p-2 bg-gray-100">
                   {question}
@@ -144,7 +144,7 @@ export default function ContactPage() {
           </AccordionItem>
         </Accordion>
         <div className="accordion-container">
-      <Accordion isCompact>
+      <Accordion isCompact variant='shadow'>
         <AccordionItem
           key="friend-list"
           title={
@@ -174,7 +174,7 @@ export default function ContactPage() {
       </div>
       <button
         onClick={handleDeleteAllData}
-        className="fixed bottom-4 left-4 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 focus:outline-none"
+        className="mt-4 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 focus:outline-none"
       >
         Alle Daten löschen
       </button>
