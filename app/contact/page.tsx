@@ -9,9 +9,9 @@ import getQuestions from '@/utils/IceBreaker';
 import FriendForm from '@/components/FriendForm';
 
 
-const NUMBER_OF_QUESTIONS = 4;
-const MINIMUM_FIRST_TIME = 1; // in minutes
-const TIME_TO_SWITCH = 3; // in minutes
+const NUMBER_OF_QUESTIONS = process.env.NUMBER_OF_QUESTIONS ? parseInt(process.env.NUMBER_OF_QUESTIONS) : 4;
+const MINIMUM_FIRST_TIME = process.env.MINIMUM_FIRST_TIME ? parseInt(process.env.MINIMUM_FIRST_TIME) : 2; // in minutes
+const TIME_TO_SWITCH = process.env.TIME_TO_SWITCH ? parseInt(process.env.TIME_TO_SWITCH) : 10; // in minutes
 
 const SUBDOMAIN = process.env.SUBDOMAIN;
 
