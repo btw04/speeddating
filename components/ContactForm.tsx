@@ -2,7 +2,8 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { setCookie } from "cookies-next";
+
+const SUBDOMAIN = process.env.SUBDOMAIN;
 
 const ContactForm = () => {
   const [email, setEmail] = useState('');
@@ -15,7 +16,8 @@ const ContactForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const response = await fetch('/api/submit/contact', {
+    const path = SUBDOMAIN ? SUBDOMAIN + '/api/submit/contact' : '/api/submit/contact';
+    const response = await fetch(path, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, name }),

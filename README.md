@@ -6,13 +6,14 @@ This website is intended to help students connect and share their contact inform
 
 ### Prerequisites
 - [Docker](https://www.docker.com/get-started)
-- Environment variables containing the Docker Connection URI as `MONGO_URI`, the exposed website port as `EXTERNAL_PORT`, the exposed MongoDB port as `MONGO_PORT` and `MONGO_USER` + `MONGO_PASS` for the MongoDB user and password. These must match the used credentials in the `MONGO_URI`. The easiest way to set this up locally is to create a `.env` file in the same directory that looks like this:
+- Environment variables containing the Docker Connection URI as `MONGO_URI`, the exposed website port as `EXTERNAL_PORT`, the exposed MongoDB port as `MONGO_PORT` and `MONGO_USER` + `MONGO_PASS` for the MongoDB user and password. These must match the used credentials in the `MONGO_URI`. Optionally, add a `SUBDOMAIN` entry if running the website as a subdomain. The easiest way to set this up locally is to create a `.env` file in the same directory that looks like this:
 ```
 EXTERNAL_PORT=8081
 MONGO_URI = mongodb://abc:abc123@mongodb:27017/
 MONGO_PORT=27017
 MONGO_USER=abc
 MONGO_PASS=abc123
+SUBDOMAIN=/speeddating
 ```
 
 
@@ -27,7 +28,7 @@ The MongoDB Container caches the database user in its Docker volume and changing
 - [X] Option to delete specific added tags ("friends")
 - [X] Check for id-conflict on creation
 - [X] Prevent users from changing ID (separate session token)
-- [ ] Fix time-notice (server-side timestamp? delete feature?)
+- [X] Fix time-notice (server-side timestamp? delete feature?)
 - [ ] Script for distributing added friends
 
 ## License

@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import React from 'react';
 
+const SUBDOMAIN = process.env.SUBDOMAIN;
+
 interface FriendFormProps {
     onSubmission: () => void;
 }
@@ -14,7 +16,8 @@ const FriendForm: React.FC<FriendFormProps> = ({ onSubmission }) => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        const response = await fetch('/api/submit/friend', {
+        const path = SUBDOMAIN ? SUBDOMAIN + '/api/submit/friend' : '/api/submit/friend';
+        const response = await fetch(path, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ friendId, msg: friendMsg }),

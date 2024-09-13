@@ -13,6 +13,8 @@ const NUMBER_OF_QUESTIONS = 4;
 const MINIMUM_FIRST_TIME = 1; // in minutes
 const TIME_TO_SWITCH = 3; // in minutes
 
+const SUBDOMAIN = process.env.SUBDOMAIN;
+
 interface Friend {
   id: string;
   message: string | null;
@@ -64,7 +66,8 @@ export default function ContactPage() {
   }, []);
 
   async function getID(session: string) {
-    const response = await fetch("/api/id", {
+    const path = SUBDOMAIN ? SUBDOMAIN + '/api/id' : '/api/id';
+    const response = await fetch(path, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json'},
     });
@@ -73,7 +76,8 @@ export default function ContactPage() {
   }
 
   const fetchFriends = async () => {
-    const response = await fetch('/api/friends', {
+    const path = SUBDOMAIN ? SUBDOMAIN + '/api/friends' : '/api/friends';
+    const response = await fetch(path, {
       method: 'GET'
     });
     if (response.ok) {
@@ -88,7 +92,8 @@ export default function ContactPage() {
   }
 
   const handleDeleteFriend = async (friendId: string) => {
-    const response = await fetch('/api/delete/friend', {
+    const path = SUBDOMAIN ? SUBDOMAIN + '/api/delete/friend' : '/api/delete/friend';
+    const response = await fetch(path, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ friendId }),
@@ -106,7 +111,8 @@ export default function ContactPage() {
   const handleDeleteAllData = async () => {
     const confirm = window.confirm('Achtung! Bist du sicher, dass du ALLE deine Daten löschen möchtest? Dies kann nicht rückgängig gemacht werden und du wirst nicht per E-Mail über Kontakte benachrichtigt.');
     if (confirm) {
-      const response = await fetch('/api/delete', {
+      const path = SUBDOMAIN ? SUBDOMAIN + '/api/delete' : '/api/delete';
+      const response = await fetch(path, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' }
       });
