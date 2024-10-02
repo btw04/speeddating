@@ -13,7 +13,13 @@ const questions_ger: string[] = [
     "Welcher Videospiel-Charakter wärst du gerne?",
     "Was ist etwas, das du gerne können würdest?",
     "Was ist etwas, was du anders machst als andere?",
-    "Welche Musik (wenn überhaupt) hörst du beim Lernen?"
+    "Welche Musik (wenn überhaupt) hörst du beim Lernen?",
+    "Was ist dein Lieblingsbuch?",
+    "Wenn du nur noch eine Sorte Eiscreme essen könntest, welche wäre es?",
+    "Hast du bereits Programmiererfahrung?",
+    "Oregano oder Oregano?",
+    "Welches Musikinstrument würdest du gerne spielen können?",
+    "Was ist die letzte Sache, die du an deinem Computer gemacht hast?"
 ];
 
 
