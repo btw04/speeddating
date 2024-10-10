@@ -6,9 +6,20 @@ This website is intended to help students connect and share their contact inform
 
 ### Prerequisites
 - [Docker](https://www.docker.com/get-started)
+- A couple of environment variables for setup:
 
-Environment variables containing the Docker Connection URI as `MONGO_URI`, the exposed website port as `EXTERNAL_PORT`, the exposed MongoDB port as `MONGO_PORT` and `MONGO_USER` + `MONGO_PASS` for the MongoDB user and password. These **must match** the used credentials in the `MONGO_URI`. 
-Optional parameters are `SUBDOMAIN` if running the website as a subpath, `NUMBER_OF_QUESTIONS` for the number of "ice breaker" questions displayed for users, `TIME_TO_SWITCH` (in minutes) for the time after which users are notified to switch their conversation partners and `MINIMUM_FIRST_TIME` (in minutes) for the minimum time required before users are notified to switch their conversation. Note that these reminders are synchronized, so if a user logs in with MINIMUM_FIRST_TIME remaining until the next switch, they will only get notified after the remaining time + the next TIME_TO_SWITCH cycle. This might result in some users getting notified at a certain time while others are only notified on the next "cycle". For this reason, it is recommended to keep the MINIMUM_FIRST_TIME at a low value.
+| **Environment Variable** | **Description**                                                               | **Required** | **Recommended Value**                        |
+|--------------------------|-------------------------------------------------------------------------------|--------------|----------------------------------------------|
+| `MONGO_URI`              | The connection URI for MongoDB, containing the user and password              | YES          | mongodb://\<user\>:\<password\>@localhost:27017/ |
+| `MONGO_USER`             | MongoDB username, must match the value in `MONGO_URI`                         | YES          |                                              |
+| `MONGO_PASS`             | MongoDB password, must match the value in `MONGO_URI`                         | YES          |                                              |
+| `MONGO_PORT`             | The exposed port for MongoDB                                                  | YES          | 27017 (mongo default)                        |
+| `EXTERNAL_PORT`          | The exposed port for the website                                              | YES          | 8080 (needs to be open!)                     |
+| `SUBDOMAIN`              | Subpath to run the website on (experimental)                                  | NO           |                                              |
+| `NUMBER_OF_QUESTIONS`    | Number of "ice breaker" questions displayed for users                         | NO           | 3-5                                          |
+| `TIME_TO_SWITCH`         | Time in minutes after which users are notified to switch conversation partner | NO           | 3-5                                          |
+| `MINIMUM_FIRST_TIME`     | Minimum time in minutes before users are notified to switch conversation      | NO           | 10                                           |
+
 
 The easiest way to set this up locally is to create a `.env` file in the same directory that looks like this:
 ```
